@@ -5,8 +5,11 @@ Public Class Form7
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-
-        Me.Hide()
+        lstDescripcion.Items.Clear()
+        lstFecha.Items.Clear()
+        lstMonto.Items.Clear()
+        lstTipo.Items.Clear()
+        Me.Close()
         Form5.Show()
     End Sub
 
