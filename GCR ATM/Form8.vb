@@ -12,17 +12,20 @@
         Dim destino, actual As String
         Dim cantidad As Double
 
-        If cbBanco.SelectedIndex = 0 Then
-            MsgBox("ah " & cbBanco.SelectedIndex & " " & cbBanco.SelectedItem)
-        End If
-
         destino = txtDestino.Text
         cantidad = txtMonto.Text
         actual = clabe
         clabe = destino
-        Aniadir(cantidad)
-        clabe = actual
-        Extraer(cantidad)
+
+        If cbBanco.SelectedIndex = 0 Then
+            Aniadir(cantidad)
+            clabe = actual
+            Extraer(cantidad)
+        Else
+            AniadirInter(cantidad)
+            clabe = actual
+            ExtraerInter(cantidad)
+        End If
 
         des = "Transferencia a " & destino
         RegistrarMovimiento("Transferencia", cantidad)

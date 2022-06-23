@@ -82,4 +82,13 @@ Module Module1
         End Select
         conexion.Open()
     End Sub
+
+    Public Sub AniadirInter(cantidad)
+
+    End Sub
+
+    Public Sub ExtraerInter(cantidad)
+
+    End Sub
+
 End Module
