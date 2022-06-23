@@ -63,10 +63,10 @@ Module Module1
     End Sub
 
     Public Sub RegistrarMovimiento(mov As String, monto As Double)
-        Dim hoy As Date
+        Dim hoy As String
         hoy = Today
 
-        sql = "Insert into Historial values ('" & clabe & "', '" & hoy & "', '" & mov & "', " & monto & ", '" & des & "')"
+        sql = "Insert into Historial values ('" & clabe & "', '06/23/2022', '" & mov & "', " & monto & ", '" & des & "')"
         Conectar()
         com = New SqlCommand(sql, conexion)
         res = com.ExecuteNonQuery

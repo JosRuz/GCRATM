@@ -4,7 +4,7 @@ Public Class Form5
 
     Dim cantidad As Double
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        End
+        Me.Close()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -52,13 +52,7 @@ Public Class Form5
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        Dim destino, actual As String
-        destino = InputBox("Ingrese el numero de cuenta a depositar: ")
-        cantidad = InputBox("ingresa la cantidad a depositar ")
-        actual = clabe
-        clabe = destino
-        Aniadir(cantidad)
-        clabe = actual
-        Extraer(cantidad)
+        Me.Hide()
+        Form8.Show()
     End Sub
 End Class
