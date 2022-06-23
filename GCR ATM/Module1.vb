@@ -14,10 +14,19 @@ Module Module1
     Public eldinero As Double
     Public des As String
     Public tipo As String
+
+    Public remoto As Boolean
+    Public banco As String
+
     Public Sub Conectar()
-        conexion = New SqlConnection
-        conexion.ConnectionString = "server=(local);database=GCRPrivate; integrated security=true"
-        conexion.Open()
+        If remoto = True Then
+            ConexionRemota(banco)
+        Else
+            conexion = New SqlConnection
+            conexion.ConnectionString = "server=(local);database=GCRPrivate; integrated security=true"
+            conexion.Open()
+        End If
+
     End Sub
     Public Sub Extraer(movimiento As Double)
         Consultar()
@@ -62,5 +71,15 @@ Module Module1
         com = New SqlCommand(sql, conexion)
         res = com.ExecuteNonQuery
 
+    End Sub
+
+    Public Sub ConexionRemota(banco)
+        conexion = New SqlConnection
+
+        Select Case banco
+            Case "GCR Private"
+                conexion.ConnectionString = "server=tcp:DESKTOP-8SDVA09,1433;database=GCRPrivate; integrated security=false; user id=josue; password=1234;"
+        End Select
+        conexion.Open()
     End Sub
 End Module

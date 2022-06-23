@@ -32,6 +32,8 @@ Partial Class Form2
         Me.txtPin = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.cbBanco = New System.Windows.Forms.ComboBox()
+        Me.Chb = New System.Windows.Forms.CheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -124,12 +126,34 @@ Partial Class Form2
         Me.Button3.Text = "Registrarse"
         Me.Button3.UseVisualStyleBackColor = False
         '
+        'cbBanco
+        '
+        Me.cbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbBanco.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbBanco.FormattingEnabled = True
+        Me.cbBanco.Items.AddRange(New Object() {"GCR Private", "Scorpio", "Wolves", "CRM", "Rinobanco", "Paybank", "money cash", "SMH", "FEDIMA", "Bank Bros", "AVA"})
+        Me.cbBanco.Location = New System.Drawing.Point(78, 265)
+        Me.cbBanco.Name = "cbBanco"
+        Me.cbBanco.Size = New System.Drawing.Size(293, 32)
+        Me.cbBanco.TabIndex = 14
+        '
+        'Chb
+        '
+        Me.Chb.AutoSize = True
+        Me.Chb.Location = New System.Drawing.Point(629, 17)
+        Me.Chb.Name = "Chb"
+        Me.Chb.Size = New System.Drawing.Size(15, 14)
+        Me.Chb.TabIndex = 15
+        Me.Chb.UseVisualStyleBackColor = True
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Honeydew
         Me.ClientSize = New System.Drawing.Size(703, 352)
+        Me.Controls.Add(Me.Chb)
+        Me.Controls.Add(Me.cbBanco)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.txtPin)
@@ -158,4 +182,6 @@ Partial Class Form2
     Friend WithEvents txtPin As TextBox
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents cbBanco As ComboBox
+    Friend WithEvents Chb As CheckBox
 End Class

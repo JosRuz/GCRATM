@@ -7,11 +7,23 @@ Public Class Form2
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
         clabe = txtCuenta.Text
         Pin = txtPin.Text
 
         sql = "Select * from Cliente where CLABE='" & clabe & "' and pin='" & Pin & "'"
-        Conectar()
+
+        If Chb.Checked Then
+            remoto = True
+
+            banco = cbBanco.SelectedItem
+            ConexionRemota(banco)
+        Else
+
+            Conectar()
+
+        End If
+
         com = New SqlCommand(sql, conexion)
         dr = com.ExecuteReader
 
@@ -30,4 +42,8 @@ Public Class Form2
         Form3.Show()
     End Sub
 
+    Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        remoto = False
+        Me.cbBanco.Text = Me.cbBanco.Items(0).ToString
+    End Sub
 End Class
