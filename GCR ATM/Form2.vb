@@ -20,6 +20,17 @@ Public Class Form2
             ConexionRemota(banco)
         Else
 
+            remoto = True
+            Dim BANCA As String
+            BANCA = cbBanco.SelectedItem
+            banco = BANCA
+            Select Case BANCA
+                Case "GRC Private"
+                    sql = "Select * from Cliente where CLABE='" & clabe & "' and pin='" & Pin & "'"
+                Case "CRM"
+                    sql = "Select * from Cuentas where NoCuenta='" & clabe & "' and NIP='" & Pin & "'"
+            End Select
+            ConexionRemota(BANCA)
             Conectar()
 
         End If

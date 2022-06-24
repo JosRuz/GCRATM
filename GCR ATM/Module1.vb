@@ -18,6 +18,8 @@ Module Module1
     Public remoto As Boolean
     Public banco As String
 
+    Public BancoEXTinciio As String
+
     Public Sub Conectar()
         If remoto = True Then
             ConexionRemota(banco)
@@ -79,6 +81,28 @@ Module Module1
         Select Case banco
             Case "GCR Private"
                 conexion.ConnectionString = "server=tcp:DESKTOP-8SDVA09,1433;database=GCRPrivate; integrated security=false; user id=josue; password=1234;"
+            Case "CRM"
+                conexion.ConnectionString = "server=tcp:DESKTOP-CT3ITH8,1433;database=CRM; integrated security=false; user=sa; password=12345"
+            Case "Wolves"
+                MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
+            Case "Rinobanco"
+                conexion.ConnectionString = "server=LUIS-GUIRON,1433;database=RINOBANCO; integrated security=false; user=sa; password=1234"
+            Case "Paybank"
+                conexion.ConnectionString = "server=tcp:DESKTOP-214QSUU,1433;database=Banco; integrated security=false; user=sa; password=1234"
+            Case "money cash"
+                conexion.ConnectionString = "server=tcp:DESKTOP-OQQ747E,1433;database=moneycash; integrated security=false; user=money; password=1234"
+            Case "MSC"
+                conexion.ConnectionString = "server=DESKTOP-RQORV2P,1433;database=Proyecto; integrated security=false; user=miguel; password=1234"
+            Case "FEDIMA"
+                conexion.ConnectionString = "server=LAPTOP-Q39G94J8,1433;database=______; integrated security=false; user=Marian; password=1234"
+            Case "Bank Bros"
+                MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
+            Case "AVA"
+                conexion.ConnectionString = "server=tcp:DESKTOP-LJEOQSA,1433;database=BancoAVA; integrated security=false; user=sa1; password=123"
+            Case "SCORPIO"
+                conexion.ConnectionString = "server=tcp:DESKTOP-MK42GT4,1433;database=BANCO; integrated security=false; user=sa; password=1433"
+            Case "BancoW"
+                conexion.ConnectionString = "server=LAPTOP-GHOUL,1433;database=______; integrated security=false; user=362M; password=1234"
         End Select
         conexion.Open()
     End Sub
@@ -90,5 +114,6 @@ Module Module1
     Public Sub ExtraerInter(cantidad)
 
     End Sub
+
 
 End Module

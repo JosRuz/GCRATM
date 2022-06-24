@@ -131,7 +131,7 @@ Partial Class Form2
         Me.cbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBanco.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbBanco.FormattingEnabled = True
-        Me.cbBanco.Items.AddRange(New Object() {"GCR Private", "Scorpio", "Wolves", "CRM", "Rinobanco", "Paybank", "money cash", "SMH", "FEDIMA", "Bank Bros", "AVA"})
+        Me.cbBanco.Items.AddRange(New Object() {"GCR Private", "Scorpio", "Wolves", "CRM", "Rinobanco", "Paybank", "money cash", "MSC", "FEDIMA", "Bank Bros", "AVA", "SCORPIO", "BancoW"})
         Me.cbBanco.Location = New System.Drawing.Point(78, 265)
         Me.cbBanco.Name = "cbBanco"
         Me.cbBanco.Size = New System.Drawing.Size(293, 32)
