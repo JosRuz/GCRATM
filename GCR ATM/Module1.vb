@@ -74,7 +74,7 @@ Module Module1
                 Case "FEDIMA"
                     sql = "Select Saldo From Cajero where ID_cuenta='" & clabe & "'"
                 Case "Bank Bros"
-                    sql = "Select Saldo From Tarjeta where ID_Cliente='" & clabe & "'"
+                    sql = "Select Saldo From Cuentas where NoCuenta='" & clabe & "'"
                 Case "AVA"
                     Exit Sub
                 Case "SCORPIO"
@@ -101,7 +101,7 @@ Module Module1
             Case "GCR Private"
                 sql = "Insert into Historial values ('" & clabe & "', getdate(), '" & mov & "', " & monto & ", '" & des & "')"
             Case "CRM"
-                sql = "Insert into Movimientos values ('" & randi & "', '" & mov & "', '', '" & clabe & "', '" & randi2 & "', " & monto & ")"
+                sql = "Insert into Movimientos values ('" & randi & "', '" & mov & "', '', '" & clabe & "', '" & clabe & "', '" & monto & "', '" & randi2 & "', " & monto & ")"
             Case "Wolves"
                 Exit Sub
             Case "Rinobanco"
@@ -115,14 +115,7 @@ Module Module1
             Case "FEDIMA"
                 Exit Sub
             Case "Bank Bros"
-                sql = "Select ID_Tarjeta From Tarjeta where ID_Cliente='" & clabe & "'"
-                Conectar()
-                com = New SqlCommand(sql, conexion)
-                dr = com.ExecuteReader
-
-                dr.Read()
-                dato = dr(0)
-                sql = "Insert into Movimiento values ('" & randi & "', '" & dato & "', " & mov & ", '', getdate(), " & monto & ")"
+                sql = "Insert into Movimientos values ('" & randi & "', '" & mov & "', '" & clabe & "', '" & clabe & "', '" & randi2 & "', " & monto & ")"
             Case "AVA"
                 Exit Sub
             Case "SCORPIO"
@@ -234,7 +227,7 @@ Module Module1
             Case "FEDIMA"
                 sql = "Update Cajero set Saldo=" & cantidad & " where ID_Cuenta='" & clabe & "'"
             Case "Bank Bros"
-                MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
+                sql = "Update Cuentas set Saldo=" & cantidad & " where NoCuenta='" & clabe & "'"
             Case "AVA"
                 sql = "Update Cuenta set Saldo=" & cantidad & " where id_cuenta='" & clabe & "'"
             Case "SCORPIO"

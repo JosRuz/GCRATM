@@ -35,7 +35,7 @@ Public Class Form2
             Case "FEDIMA"
                 sql = "Select * From Cuenta Bancaria where ID_cuenta='" & clabe & "' and NIP='" & Pin & "'"
             Case "Bank Bros"
-                sql = "Select * From Cliente where IDCliente='" & clabe & "'"
+                sql = "Select * From Cuentas where NoCuenta='" & clabe & "'"
             Case "AVA"
                 sql = "Select * From Cuenta where id_cuenta='" & clabe & "' and no_cuenta='" & Pin & "'"
             Case "SCORPIO"
