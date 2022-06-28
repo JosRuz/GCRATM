@@ -13,27 +13,36 @@ Public Class Form2
 
         sql = "Select * from Cliente where CLABE='" & clabe & "' and pin='" & Pin & "'"
 
-        If Chb.Checked Then
-            remoto = True
-
-            banco = cbBanco.SelectedItem
-            ConexionRemota(banco)
-        Else
-
-            remoto = True
-            Dim BANCA As String
-            BANCA = cbBanco.SelectedItem
-            banco = BANCA
-            Select Case BANCA
-                Case "GRC Private"
-                    sql = "Select * from Cliente where CLABE='" & clabe & "' and pin='" & Pin & "'"
-                Case "CRM"
-                    sql = "Select * from Cuentas where NoCuenta='" & clabe & "' and NIP='" & Pin & "'"
-            End Select
-            ConexionRemota(BANCA)
-            Conectar()
-
-        End If
+        remoto = True
+        Dim BANCA As String
+        BANCA = cbBanco.SelectedItem
+        banco = BANCA
+        Select Case BANCA
+            Case "GRC Private"
+                sql = "Select * from Cliente where CLABE='" & clabe & "' and pin='" & Pin & "'"
+            Case "CRM"
+                sql = "Select * from Cuentas where NoCuenta='" & clabe & "' and NIP='" & Pin & "'"
+            Case "Wolves"
+                sql = "Select * From CLIENTE where ID_CLIENTE='" & clabe & "' and NIP='" & Pin & "'"
+            Case "Rinobanco"
+                sql = "Select * From Cliente where id='" & clabe & "'"
+            Case "Paybank"
+                sql = "Select * From Cuenta where id_Cuenta='" & clabe & "' and Nip='" & Pin & "'"
+            Case "money cash"
+                sql = ""
+            Case "MSC"
+                sql = "Select * From cliente where id cuentasbancarias='" & clabe & "'"
+            Case "FEDIMA"
+                sql = "Select * From Cuenta Bancaria where ID_cuenta='" & clabe & "' and NIP='" & Pin & "'"
+            Case "Bank Bros"
+                sql = "Select * From Cliente where IDCliente='" & clabe & "'"
+            Case "AVA"
+                sql = "Select * From Cuenta where id_cuenta='" & clabe & "' and no_cuenta='" & Pin & "'"
+            Case "SCORPIO"
+                sql = "Select * From Tarjeta where idCli='" & clabe & "' and Pin='" & Pin & "'"
+        End Select
+        ConexionRemota(BANCA)
+        Conectar()
 
         com = New SqlCommand(sql, conexion)
         dr = com.ExecuteReader
@@ -43,7 +52,7 @@ Public Class Form2
             Me.Hide()
             Form5.Show()
         Else
-            MsgBox("No existes :(")
+            MsgBox("Credenciales incorrectas")
         End If
 
     End Sub

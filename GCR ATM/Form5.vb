@@ -16,7 +16,13 @@ Public Class Form5
         Consultar()
 
         cantidad = InputBox("Cantidad a depositar: ")
-        Aniadir(cantidad)
+
+        If banco = "GCR Private" Then
+            Aniadir(cantidad)
+        Else
+            AniadirInter(banco, cantidad, "Deposito")
+        End If
+
         RegistrarMovimiento("Deposito", cantidad)
 
         MsgBox("Deposito realizado con exito")
@@ -32,13 +38,18 @@ Public Class Form5
         Dim retiro As Double
         retiro = InputBox("Ingrese la cantidad a retirar")
         Consultar()
-        If eldinero < retiro Then
-            MsgBox("No hay suficiente dinero en tu cuenta para retirar esa cantidad")
+        If banco = "GCR Private" Then
+            If eldinero < retiro Then
+                MsgBox("No hay suficiente dinero en tu cuenta para retirar esa cantidad")
+            Else
+                Extraer(retiro)
+                MsgBox("Retiro realizado con exito")
+                RegistrarMovimiento("Retiro", retiro)
+            End If
         Else
-            Extraer(retiro)
-            MsgBox("Retiro realizado con exito")
-            RegistrarMovimiento("Retiro", retiro)
+
         End If
+
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click

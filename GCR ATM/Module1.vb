@@ -50,25 +50,30 @@ Module Module1
         res = com.ExecuteNonQuery
     End Sub
     Public Sub Consultar()
-        Try
-            sql = "select Estado from CuentaBancaria where CLABE='" & clabe & "'"
-            Conectar()
-            com = New SqlCommand(sql, conexion)
-            dr = com.ExecuteReader
+        If banco = "GCR Private" Then
+            Try
+                sql = "select Estado from CuentaBancaria where CLABE='" & clabe & "'"
+                Conectar()
+                com = New SqlCommand(sql, conexion)
+                dr = com.ExecuteReader
 
-            dr.Read()
-            eldinero = dr(0)
+                dr.Read()
+                eldinero = dr(0)
 
-        Catch ex As Exception
-            MsgBox("oh No, " & ex.Message)
-        End Try
+            Catch ex As Exception
+                MsgBox("oh No, " & ex.Message)
+            End Try
+        Else
+
+        End If
+
     End Sub
 
     Public Sub RegistrarMovimiento(mov As String, monto As Double)
         Dim hoy As String
         hoy = Today
 
-        sql = "Insert into Historial values ('" & clabe & "', '06/23/2022', '" & mov & "', " & monto & ", '" & des & "')"
+        sql = "Insert into Historial values ('" & clabe & "', '" & hoy & "', '" & mov & "', " & monto & ", '" & des & "')"
         Conectar()
         com = New SqlCommand(sql, conexion)
         res = com.ExecuteNonQuery
@@ -77,14 +82,23 @@ Module Module1
 
     Public Sub ConexionRemota(banco)
         conexion = New SqlConnection
+        Dim local As Boolean
+        local = False
 
         Select Case banco
             Case "GCR Private"
-                conexion.ConnectionString = "server=tcp:DESKTOP-8SDVA09,1433;database=GCRPrivate; integrated security=false; user id=josue; password=1234;"
+                Try
+                    conexion.ConnectionString = "server=tcp:DESKTOP-8SDVA09,1433;database=GCRPrivate; integrated security=false; user id=josue; password=1234;"
+                    conexion.Open()
+                Catch ex As Exception
+                    remoto = False
+                    Conectar()
+                    local = True
+                End Try
             Case "CRM"
                 conexion.ConnectionString = "server=tcp:DESKTOP-CT3ITH8,1433;database=CRM; integrated security=false; user=sa; password=12345"
             Case "Wolves"
-                MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
+                conexion.ConnectionString = "server=LAPTOP-GHOUL,1433;database=BancoW; integrated security=false; user=362M; password=1234"
             Case "Rinobanco"
                 conexion.ConnectionString = "server=LUIS-GUIRON,1433;database=RINOBANCO; integrated security=false; user=sa; password=1234"
             Case "Paybank"
@@ -94,26 +108,58 @@ Module Module1
             Case "MSC"
                 conexion.ConnectionString = "server=DESKTOP-RQORV2P,1433;database=Proyecto; integrated security=false; user=miguel; password=1234"
             Case "FEDIMA"
-                conexion.ConnectionString = "server=LAPTOP-Q39G94J8,1433;database=______; integrated security=false; user=Marian; password=1234"
+                conexion.ConnectionString = "server=LAPTOP-Q39G94J8,1433;database=CAJA2; integrated security=false; user=Marian; password=1234"
             Case "Bank Bros"
                 MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
             Case "AVA"
                 conexion.ConnectionString = "server=tcp:DESKTOP-LJEOQSA,1433;database=BancoAVA; integrated security=false; user=sa1; password=123"
             Case "SCORPIO"
                 conexion.ConnectionString = "server=tcp:DESKTOP-MK42GT4,1433;database=BANCO; integrated security=false; user=sa; password=1433"
-            Case "BancoW"
-                conexion.ConnectionString = "server=LAPTOP-GHOUL,1433;database=______; integrated security=false; user=362M; password=1234"
         End Select
-        conexion.Open()
+        If local = False Then
+            Try
+                conexion.Open()
+            Catch ex As Exception
+                If banco <> "GCR Private" Then
+                    MsgBox("El banco que está intentando accesar no se encuentra disponible, este es un problema ajeno a GCR Private, el banco de tus sueños")
+                End If
+            End Try
+        End If
     End Sub
 
-    Public Sub AniadirInter(cantidad)
+    Public Sub AniadirInter(banco As String, cantidad As Double, tipo As String)
+        Consultar()
+        cantidad = eldinero + cantidad
+        Select Case banco
+            Case "CRM"
+                sql = "Update Cuentas set Saldo=" & cantidad & " where NoCuenta='" & clabe & "'"
+            Case "Wolves"
+                sql = "Update CUENTA set Saldo=" & cantidad & " where ID_CLIENTE='" & clabe & "'"
+            Case "Rinobanco"
 
+            Case "Paybank"
+                sql = "Update Cuenta set Saldo=" & cantidad & " where id_Cuenta='" & clabe & "'"
+            Case "money cash"
+
+            Case "MSC"
+                sql = "Update cuentasbancarias set saldo=" & cantidad & " where id cuentasbancarias='" & clabe & "'"
+            Case "FEDIMA"
+                sql = "Update Cajero set Saldo=" & cantidad & " where ID_Cuenta='" & clabe & "'"
+            Case "Bank Bros"
+                MsgBox("El banco que está intentando accesar se encuentra inaccesible por el momento, este es un problema ajeno a GCR Private el banco de tus sueños")
+            Case "AVA"
+                sql = "Update Cuenta set Saldo=" & cantidad & " where id_cuenta='" & clabe & "'"
+            Case "SCORPIO"
+                sql = "Update Cuentas set Diner=" & cantidad & " where idCli='" & clabe & "'"
+        End Select
+        Try
+            Conectar()
+            com = New SqlCommand(sql, conexion)
+            res = com.ExecuteNonQuery
+        Catch ex As Exception
+            MsgBox("Algo ocurrio al intentar metersela al otro banco")
+        End Try
+        ''MovimientosInter(tipo)
     End Sub
-
-    Public Sub ExtraerInter(cantidad)
-
-    End Sub
-
 
 End Module
