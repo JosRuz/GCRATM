@@ -50,30 +50,118 @@ Module Module1
         res = com.ExecuteNonQuery
     End Sub
     Public Sub Consultar()
+        Dim dato As String
         If banco = "GCR Private" Then
             Try
                 sql = "select Estado from CuentaBancaria where CLABE='" & clabe & "'"
-                Conectar()
-                com = New SqlCommand(sql, conexion)
-                dr = com.ExecuteReader
-
-                dr.Read()
-                eldinero = dr(0)
-
             Catch ex As Exception
                 MsgBox("oh No, " & ex.Message)
             End Try
         Else
-
+            Select Case banco
+                Case "CRM"
+                    sql = "Select Saldo From Cuentas where NoCuenta='" & clabe & "'"
+                Case "Wolves"
+                    sql = "Select SALDO From CUENTA where CUENTA_BANCARIA='" & clabe & "'"
+                Case "Rinobanco"
+                    Exit Sub
+                Case "Paybank"
+                    sql = "Select Saldo From Cuenta where id_Cuenta='" & clabe & "'"
+                Case "money cash"
+                    Exit Sub
+                Case "MSC"
+                    sql = "Select saldo From cuentasbancarias where id cuentasbancarias='" & clabe & "'"
+                Case "FEDIMA"
+                    sql = "Select Saldo From Cajero where ID_cuenta='" & clabe & "'"
+                Case "Bank Bros"
+                    sql = "Select Saldo From Tarjeta where ID_Cliente='" & clabe & "'"
+                Case "AVA"
+                    Exit Sub
+                Case "SCORPIO"
+                    sql = "Select Diner From Cuentas where IdCli='" & clabe & "'"
+            End Select
         End If
+        Conectar()
+        com = New SqlCommand(sql, conexion)
+        dr = com.ExecuteReader
 
+        dr.Read()
+        eldinero = dr(0)
     End Sub
 
     Public Sub RegistrarMovimiento(mov As String, monto As Double)
         Dim hoy As String
         hoy = Today
+        Dim randi, randi2 As Integer
+        Dim dato As String
+        randi = Int((99 - 10 + 1) * Rnd() + 10)
+        randi2 = Int((99 - 10 + 1) * Rnd() + 10)
 
-        sql = "Insert into Historial values ('" & clabe & "', '" & hoy & "', '" & mov & "', " & monto & ", '" & des & "')"
+        Select Case banco
+            Case "GCR Private"
+                sql = "Insert into Historial values ('" & clabe & "', getdate(), '" & mov & "', " & monto & ", '" & des & "')"
+            Case "CRM"
+                sql = "Insert into Movimientos values ('" & randi & "', '" & mov & "', '', '" & clabe & "', '" & randi2 & "', " & monto & ")"
+            Case "Wolves"
+                Exit Sub
+            Case "Rinobanco"
+                Exit Sub
+            Case "Paybank"
+                Exit Sub
+            Case "money cash"
+                Exit Sub
+            Case "MSC"
+                sql = "Insert into Movimiento values ('" & randi & "', '" & mov & "', " & monto & ", '', getdate())"
+            Case "FEDIMA"
+                Exit Sub
+            Case "Bank Bros"
+                sql = "Select ID_Tarjeta From Tarjeta where ID_Cliente='" & clabe & "'"
+                Conectar()
+                com = New SqlCommand(sql, conexion)
+                dr = com.ExecuteReader
+
+                dr.Read()
+                dato = dr(0)
+                sql = "Insert into Movimiento values ('" & randi & "', '" & dato & "', " & mov & ", '', getdate(), " & monto & ")"
+            Case "AVA"
+                Exit Sub
+            Case "SCORPIO"
+                Select Case mov
+                    Case "Deposito"
+                        sql = "Select CLABE From Cuentas where IdCli='" & clabe & "'"
+                        Conectar()
+                        com = New SqlCommand(sql, conexion)
+                        dr = com.ExecuteReader
+
+                        dr.Read()
+                        dato = dr(0)
+
+                        sql = "Insert into Depositos values ('" & dato & "', '" & mov & "', " & monto & ", '', getdate())"
+                    Case "Retiro"
+                        sql = "Select NumTar From Tarjeta where IdCli='" & clabe & "'"
+                        Conectar()
+                        com = New SqlCommand(sql, conexion)
+                        dr = com.ExecuteReader
+
+                        dr.Read()
+                        dato = dr(0)
+
+                        sql = "Inser into Retiros values ('" & dato & "', '" & Pin & "', " & monto & ", getdate(), '')"
+                    Case "Pago de servicio"
+                        Exit Sub
+                    Case "Transferencia"
+                        sql = "Select CLABE From Cuentas where IdCli='" & clabe & "'"
+                        Conectar()
+                        com = New SqlCommand(sql, conexion)
+                        dr = com.ExecuteReader
+
+                        dr.Read()
+                        dato = dr(0)
+
+                        sql = "Inser into Transferencias values ('" & dato & "', '" & clabe & "', " & monto & ", getdate(), '')"
+                End Select
+        End Select
+
         Conectar()
         com = New SqlCommand(sql, conexion)
         res = com.ExecuteNonQuery
@@ -127,7 +215,7 @@ Module Module1
         End If
     End Sub
 
-    Public Sub AniadirInter(banco As String, cantidad As Double, tipo As String)
+    Public Sub AniadirInter(banco As String, cantidad As Double)
         Consultar()
         cantidad = eldinero + cantidad
         Select Case banco
@@ -159,7 +247,6 @@ Module Module1
         Catch ex As Exception
             MsgBox("Algo ocurrio al intentar metersela al otro banco")
         End Try
-        ''MovimientosInter(tipo)
     End Sub
 
 End Module

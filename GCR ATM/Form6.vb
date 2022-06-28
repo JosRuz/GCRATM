@@ -13,10 +13,17 @@
         monto = txtMonto.Text
         Consultar()
         If monto < eldinero Then
-            Extraer(monto)
+            If banco = "GCR Private" Then
+                Extraer(monto)
+            Else
+                monto = monto * -1
+                AniadirInter(banco, monto)
+            End If
             MsgBox("Pago realizado con exito")
             des = "Pago a " & cmbServicio.SelectedItem
             RegistrarMovimiento("Pago de servicio", monto)
+
+            txtMonto.Clear()
 
             Me.Hide()
             Form5.Show()

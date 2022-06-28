@@ -12,28 +12,38 @@
         Dim destino, actual As String
         Dim cantidad As Double
 
+        Dim BancoDestino As String
+
         destino = txtDestino.Text
         cantidad = txtMonto.Text
         actual = clabe
         clabe = destino
+        BancoDestino = cbBanco.SelectedItem
 
-        If cbBanco.SelectedIndex = 0 Then
-            Aniadir(cantidad)
-            clabe = actual
-            Extraer(cantidad)
+        Consultar()
+        If eldinero < cantidad Then
+            MsgBox("No tienes suficientes fondos para realizar esta transferencia")
         Else
-            AniadirInter(cantidad)
-            clabe = actual
-            ExtraerInter(cantidad)
+            If cbBanco.SelectedItem = "GCR Private" Then
+                Aniadir(cantidad)
+                clabe = actual
+                Extraer(cantidad)
+            Else
+                AniadirInter(BancoDestino, cantidad)
+                clabe = actual
+                cantidad = cantidad * -1
+                AniadirInter(banco, cantidad)
+            End If
+
+            des = "Transferencia a " & destino
+            RegistrarMovimiento("Transferencia", cantidad)
+            des = ""
+
+            MsgBox("El deposito se realizó exitosamente")
+            Me.Hide()
+            Form5.Show()
         End If
 
-        des = "Transferencia a " & destino
-        RegistrarMovimiento("Transferencia", cantidad)
-        des = ""
-
-        MsgBox("El deposito se realizó exitosamente")
-        Me.Hide()
-        Form5.Show()
     End Sub
 
     Private Sub Form8_Load(sender As Object, e As EventArgs) Handles MyBase.Load

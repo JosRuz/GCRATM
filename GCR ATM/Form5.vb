@@ -20,7 +20,7 @@ Public Class Form5
         If banco = "GCR Private" Then
             Aniadir(cantidad)
         Else
-            AniadirInter(banco, cantidad, "Deposito")
+            AniadirInter(banco, cantidad)
         End If
 
         RegistrarMovimiento("Deposito", cantidad)
@@ -38,16 +38,17 @@ Public Class Form5
         Dim retiro As Double
         retiro = InputBox("Ingrese la cantidad a retirar")
         Consultar()
-        If banco = "GCR Private" Then
-            If eldinero < retiro Then
-                MsgBox("No hay suficiente dinero en tu cuenta para retirar esa cantidad")
-            Else
-                Extraer(retiro)
-                MsgBox("Retiro realizado con exito")
-                RegistrarMovimiento("Retiro", retiro)
-            End If
+        If eldinero < retiro Then
+            MsgBox("No hay suficiente dinero en tu cuenta para retirar esa cantidad")
         Else
-
+            If banco = "GRC Private" Then
+                Extraer(retiro)
+            Else
+                retiro = retiro * -1
+                AniadirInter(banco, retiro)
+            End If
+            MsgBox("Retiro realizado con exito")
+            RegistrarMovimiento("Retiro", retiro)
         End If
 
     End Sub
@@ -58,12 +59,20 @@ Public Class Form5
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        Me.Hide()
-        Form7.Show()
+        Select Case banco
+            Case "CRM", "GCR Private", "MSC", "Bank Bros", "SCORPIO"
+                Me.Hide()
+                Form7.Show()
+            Case "Wolves", "Rinobanco", "Paybank", "money cash", "FEDIMA", "AVA"
+                MsgBox("Tu banco actualmente no soporta esta función")
+        End Select
+
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+
         Me.Hide()
         Form8.Show()
+
     End Sub
 End Class
