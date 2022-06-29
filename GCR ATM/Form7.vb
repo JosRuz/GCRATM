@@ -19,15 +19,40 @@ Public Class Form7
         lstTipo.Items.Clear()
         lstDescripcion.Items.Clear()
 
+        Dim campos As Integer
+
         Conectar()
-        sql = "Select tipo, monto, fecha, descripcion from Historial where CLABE='" & clabe & "'"
+        Select Case banco
+            Case "GCR Private"
+                sql = "Select tipo, monto, fecha, descripcion from Historial where CLABE='" & clabe & "'"
+                campos = 4
+            Case "CRM"
+                sql = "Select Tipo, Monto From Movimientos where NoCuenta='" & clabe & "'"
+                campos = 2
+            Case "MSC"
+                sql = "Select tipo de movimiento, monto movimiento, fecha From movimiento"
+                campos = 3
+            Case "Bank Bros"
+                sql = "Select Tipo, Monto From Movimientos where NoCuenta='" & clabe & "'"
+                campos = 2
+        End Select
         com = New SqlCommand(sql, conexion)
         dr = com.ExecuteReader
         While dr.Read
-            lstTipo.Items.Add(dr(0))
-            lstMonto.Items.Add(dr(1))
-            lstFecha.Items.Add(dr(2))
-            lstDescripcion.Items.Add(dr(3))
+            Select Case campos
+                Case 2
+                    lstTipo.Items.Add(dr(0))
+                    lstMonto.Items.Add(dr(1))
+                Case 3
+                    lstTipo.Items.Add(dr(0))
+                    lstMonto.Items.Add(dr(1))
+                    lstFecha.Items.Add(dr(2))
+                Case 4
+                    lstTipo.Items.Add(dr(0))
+                    lstMonto.Items.Add(dr(1))
+                    lstFecha.Items.Add(dr(2))
+                    lstDescripcion.Items.Add(dr(3))
+            End Select
         End While
     End Sub
 End Class

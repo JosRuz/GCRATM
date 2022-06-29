@@ -60,10 +60,10 @@ Public Class Form5
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Select Case banco
-            Case "CRM", "GCR Private", "MSC", "Bank Bros", "SCORPIO"
+            Case "CRM", "GCR Private", "MSC", "Bank Bros"
                 Me.Hide()
                 Form7.Show()
-            Case "Wolves", "Rinobanco", "Paybank", "money cash", "FEDIMA", "AVA"
+            Case "Wolves", "Rinobanco", "Paybank", "money cash", "FEDIMA", "AVA", "SCORPIO"
                 MsgBox("Tu banco actualmente no soporta esta función")
         End Select
 
