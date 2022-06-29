@@ -208,10 +208,14 @@ Module Module1
         End If
     End Sub
 
-    Public Sub AniadirInter(banco As String, cantidad As Double)
+    Public Sub AniadirInter(DESbanco As String, cantidad As Double)
+        Dim ACTUAL As String
+        ACTUAL = banco
+        banco = DESbanco
+
         Consultar()
         cantidad = eldinero + cantidad
-        Select Case banco
+        Select Case DESbanco
             Case "CRM"
                 sql = "Update Cuentas set Saldo=" & cantidad & " where NoCuenta='" & clabe & "'"
             Case "Wolves"
@@ -240,6 +244,7 @@ Module Module1
         Catch ex As Exception
             MsgBox("Algo ocurrio al intentar metersela al otro banco")
         End Try
+        banco = ACTUAL
     End Sub
 
 End Module
