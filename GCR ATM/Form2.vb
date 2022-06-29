@@ -37,7 +37,7 @@ Public Class Form2
             Case "Bank Bros"
                 sql = "Select * From Cuentas where NoCuenta='" & clabe & "'"
             Case "AVA"
-                sql = "Select * From Cuenta where id_cuenta='" & clabe & "' and no_cuenta='" & Pin & "'"
+                sql = "Select * From Cuenta where ID_Cuenta='" & clabe & "' and NIP='" & Pin & "'"
             Case "SCORPIO"
                 sql = "Select * From Tarjeta where idCli='" & clabe & "' and Pin='" & Pin & "'"
         End Select

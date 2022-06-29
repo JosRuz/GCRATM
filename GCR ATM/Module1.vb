@@ -76,7 +76,7 @@ Module Module1
                 Case "Bank Bros"
                     sql = "Select Saldo From Cuentas where NoCuenta='" & clabe & "'"
                 Case "AVA"
-                    Exit Sub
+                    sql = "Select Saldo From Cuenta where ID_Cuenta='" & clabe & "'"
                 Case "SCORPIO"
                     sql = "Select Diner From Cuentas where IdCli='" & clabe & "'"
             End Select
@@ -233,7 +233,7 @@ Module Module1
             Case "Bank Bros"
                 sql = "Update Cuentas set Saldo=" & cantidad & " where NoCuenta='" & clabe & "'"
             Case "AVA"
-                sql = "Update Cuenta set Saldo=" & cantidad & " where id_cuenta='" & clabe & "'"
+                sql = "Update Cuenta set Saldo=" & cantidad & " where ID_Cuenta='" & clabe & "'"
             Case "SCORPIO"
                 sql = "Update Cuentas set Diner=" & cantidad & " where idCli='" & clabe & "'"
         End Select
